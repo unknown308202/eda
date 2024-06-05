@@ -1,0 +1,24 @@
+#Z SCORE
+import pandas as pd
+from scipy.stats import zscore
+
+# Load the dataset from a CSV file
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+# Display the first few rows of the dataset to understand its structure
+print(df.head())
+
+# Select only the numerical columns for Z-score calculation
+numerical_columns = df.select_dtypes(include=['number']).columns
+
+# Check for missing values and handle them (e.g., fill with mean, drop, etc.)
+df[numerical_columns] = df[numerical_columns].fillna(df[numerical_columns].mean())
+
+# Calculate the Z-scores for each numeric column
+z_scores = df[numerical_columns].apply(zscore)
+
+# Display the first few rows of the Z-scored dataset
+print(z_scores.head())
+
+# Optionally, save the Z-scored dataset to a new CSV file
+z_scores.to_csv('z_scored_dataset.csv', index=False)
