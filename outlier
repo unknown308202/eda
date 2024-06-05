@@ -1,0 +1,56 @@
+#OUTLIERS
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# Step 1: Load the dataset
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+# Step 2: Select numerical columns
+numerical_columns = df.select_dtypes(include=['number']).columns
+
+# Step 3: Detecting outliers using Z-score
+z_scores = np.abs(stats.zscore(df[numerical_columns]))
+outliers_z_score = (z_scores > 3)
+
+# Display the number of outliers detected by Z-score
+print("Number of outliers detected by Z-score method:", np.sum(outliers_z_score))
+
+# Step 4: Detecting outliers using IQR
+Q1 = df[numerical_columns].quantile(0.25)
+Q3 = df[numerical_columns].quantile(0.75)
+IQR = Q3 - Q1
+
+outliers_iqr = ((df[numerical_columns] < (Q1 - 1.5 * IQR)) | (df[numerical_columns] > (Q3 + 1.5 * IQR)))
+
+# Display the number of outliers detected by IQR
+print("Number of outliers detected by IQR method:", outliers_iqr.sum().sum())
+
+# Step 5: Handling outliers
+# Option 1: Remove outliers
+df_no_outliers_z_score = df[~outliers_z_score.any(axis=1)]
+df_no_outliers_iqr = df[~outliers_iqr.any(axis=1)]
+
+# Option 2: Replace outliers with the median (or mean) of the column
+df_replaced_outliers = df.copy()
+for column in numerical_columns:
+    median = df[column].median()
+    df_replaced_outliers.loc[outliers_z_score[column], column] = median
+
+# Option 3: Cap the outliers (winsorizing)
+from sklearn.preprocessing import QuantileTransformer
+transformer = QuantileTransformer(output_distribution='normal', random_state=0)
+df_winsorized = df.copy()
+df_winsorized[numerical_columns] = transformer.fit_transform(df[numerical_columns])
+
+# Display some of the processed data
+print(df_no_outliers_z_score.head())
+print(df_no_outliers_iqr.head())
+print(df_replaced_outliers.head())
+print(df_winsorized.head())
+
+# Optionally, save the processed dataset to a new CSV file
+df_no_outliers_z_score.to_csv('dataset_no_outliers_z_score.csv', index=False)
+df_no_outliers_iqr.to_csv('dataset_no_outliers_iqr.csv', index=False)
+df_replaced_outliers.to_csv('dataset_replaced_outliers.csv', index=False)
+df_winsorized.to_csv('dataset_winsorized.csv', index=False)
