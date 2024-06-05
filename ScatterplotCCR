@@ -1,0 +1,12 @@
+#plot scatter plot to analyze correlation, covariance and regression of different variables in given dataset
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='Year', y='Price', data=df)
+
+# Calculate and plot regression line
+sns.regplot(x='Year', y='Price', data=df, scatter=False)
+
+plt.title('Scatter Plot with Regression Line')
+plt.xlabel('Year')
+plt.ylabel('Price')
+plt.grid(True)
+plt.show()
