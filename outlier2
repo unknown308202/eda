@@ -1,0 +1,39 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Generate synthetic data
+np.random.seed(42)
+x1 = np.random.rand(100) * 100
+x2 = np.random.rand(100) * 50
+y = 3 * x1 + 2 * x2 + 7 + np.random.randn(100) * 20
+
+# Create a DataFrame
+data = pd.DataFrame({'x1': x1, 'x2': x2, 'y': y})
+
+# Create box plots to visualize outliers
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=data, orient='h')
+plt.title("Box Plots to Identify Outliers")
+plt.show()
+
+# Function to identify outliers
+def find_outliers(column):
+    Q1 = column.quantile(0.25)
+    Q3 = column.quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    outliers = column[(column < lower_bound) | (column > upper_bound)]
+    return outliers
+
+# Identify outliers in each column
+outliers_x1 = find_outliers(data['x1'])
+outliers_x2 = find_outliers(data['x2'])
+outliers_y = find_outliers(data['y'])
+
+# Print outliers
+print("Outliers in x1:\n", outliers_x1)
+print("Outliers in x2:\n", outliers_x2)
+print("Outliers in y:\n", outliers_y)
