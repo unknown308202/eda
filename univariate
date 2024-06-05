@@ -1,0 +1,52 @@
+# Identify categorical variables
+categorical_columns = df.select_dtypes(include=['object', 'category']).columns
+
+# Identify numerical variables
+numerical_columns = df.select_dtypes(include=['number']).columns
+
+#univariate categorical BARCHART
+plt.figure(figsize=(10, 6))
+sns.countplot(x='Location', data=df, palette='deep')
+plt.title(f'Count Plot of {'Location'}')
+plt.xlabel('Location')
+plt.ylabel('Count')
+plt.xticks(rotation=45)  # Rotate x-axis labels if necessary
+plt.show()
+
+#univariate categorical PIECHART
+categorical_column = 'Location' 
+category_counts = df[categorical_column].value_counts()
+plt.figure(figsize=(10, 8))
+plt.pie(category_counts, labels=category_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("husl", len(category_counts)))
+plt.title(f'Pie Chart of {categorical_column}')
+plt.show()
+
+#univariate numerical HISTOGRAM
+numerical_column = 'Seats'  # Replace with your actual column name
+plt.figure(figsize=(10, 6))
+sns.histplot(df[numerical_column], bins=30, kde=True)  # You can adjust the number of bins
+plt.title(f'Histogram of {numerical_column}')
+plt.xlabel(numerical_column)
+plt.ylabel('Frequency')
+plt.show()
+
+#univariate numerical BOXPLOT
+numerical_column = 'Year'  
+plt.figure(figsize=(10, 6))
+sns.boxplot(x=df[numerical_column])
+plt.title(f'Boxplot of {numerical_column}')
+plt.xlabel(numerical_column)
+plt.show()
+
+#univariate numerical summary statistics
+mean = df['Seats'].mean()
+median = df['Seats'].median()
+mode = df['Seats'].mode().iloc[0]  # In case of multiple modes, select the first one
+std_dev = df['Seats'].std()
+variance = df['Seats'].var()
+# Display the statistics
+print("Mean:\n", mean)
+print("\nMedian:\n", median)
+print("\nMode:\n", mode)
+print("\nStandard Deviation:\n", std_dev)
+print("\nVariance:\n", variance)
