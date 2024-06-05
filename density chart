@@ -1,0 +1,7 @@
+#DENSTIY CHART
+plt.figure(figsize=(10, 6))
+sns.kdeplot(data=df['Kilometers_Driven'], fill=True)  
+plt.title('Density Plot')
+plt.xlabel('X-axis Kilometers_Driven')
+plt.ylabel('Density')
+plt.show()
