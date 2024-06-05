@@ -1,0 +1,8 @@
+#QUANTITATIVE & QUALITATIVE DATA
+quantitative_data = df.select_dtypes(include=[np.number])
+print("Quantitative Data Summary:")
+print(quantitative_data.describe())
+
+qualitative_data = df.select_dtypes(include=['object'])
+print("Qualitative Data Summary:")
+print(qualitative_data.describe())
