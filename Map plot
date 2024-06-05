@@ -1,0 +1,6 @@
+# Plot the map
+df.plot()
+plt.title('Map Plot')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
