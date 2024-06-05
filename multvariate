@@ -1,0 +1,14 @@
+#multivariate NC facetGrid
+g = sns.FacetGrid(df, col="Transmission", hue="Transmission", palette="Set1", height=5)
+g.map(sns.scatterplot, "Year", "Price", alpha=.7)
+g.add_legend()
+plt.show()
+
+#Multivariate HEATMAP
+summary_stats = df.groupby('Transmission').agg({'Year': 'mean', 'Price': 'mean'})
+plt.figure(figsize=(8, 6))
+sns.heatmap(summary_stats, annot=True, cmap='viridis', fmt=".2f", linewidths=.5)
+plt.title('Multivariate Heatmap')
+plt.xlabel('Numerical Variable')
+plt.ylabel('Category')
+plt.show()
