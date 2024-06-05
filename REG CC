@@ -1,0 +1,34 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+# Scatter plots with regression lines
+plt.figure(figsize=(10, 6))
+sns.regplot(x='x1', y='y', data=data)
+plt.title("Scatter Plot with Regression Line: y vs. x1")
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.regplot(x='x2', y='y', data=data)
+plt.title("Scatter Plot with Regression Line: y vs. x2")
+plt.show()
+
+# Correlation matrix
+plt.figure(figsize=(10, 6))
+sns.heatmap(data.corr(), annot=True, cmap='coolwarm', center=0)
+plt.title("Correlation Matrix")
+plt.show()
+
+# Covariance matrix
+cov_matrix = data.cov()
+print("Covariance Matrix:\n", cov_matrix)
+
+# Multiple regression analysis
+X = data[['x1', 'x2']]
+X = sm.add_constant(X)  # Adds a constant term to the predictor
+model = sm.OLS(data['y'], X).fit()
+
+# Print out the regression results
+print(model.summary())
