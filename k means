@@ -1,0 +1,44 @@
+#K MEANS
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Step 1: Load the dataset
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+# Step 2: Preprocess the data
+# Separate numerical and non-numerical columns
+numerical_columns = df.select_dtypes(include=['number']).columns
+non_numerical_columns = df.select_dtypes(exclude=['number']).columns
+
+# Handle missing values for numerical columns by filling them with the mean of the column
+df[numerical_columns] = df[numerical_columns].fillna(df[numerical_columns].mean())
+
+# Select only the numerical columns for clustering
+df_numerical = df[numerical_columns]
+
+# Standardize the data
+scaler = StandardScaler()
+df_scaled = scaler.fit_transform(df_numerical)
+
+# Step 3: Perform K-means clustering
+# Define the number of clusters
+k = 3  # You can change this number based on your requirement
+kmeans = KMeans(n_clusters=k, random_state=0)
+
+# Fit the model and predict the cluster labels
+df['Cluster'] = kmeans.fit_predict(df_scaled)
+
+# Step 4: Visualize the clusters (for the first two features)
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x=numerical_columns[0], y=numerical_columns[1], hue='Cluster', palette='viridis')
+plt.title('K-means Clustering')
+plt.xlabel(numerical_columns[0])
+plt.ylabel(numerical_columns[1])
+plt.legend(title='Cluster')
+plt.show()
+
+# Optionally, save the clustered dataset to a new CSV file
+df.to_csv('clustered_dataset.csv', index=False)
