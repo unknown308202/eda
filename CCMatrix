@@ -1,0 +1,13 @@
+#covariance and correlation matrix
+numerical_columns = df.select_dtypes(include=['number'])
+
+# Compute covariance matrix
+cov_matrix = numerical_columns.cov()
+
+# Compute correlation matrix
+correlation_matrix = numerical_columns.corr()
+
+print("Covariance Matrix:")
+print(cov_matrix)
+print("\nCorrelation Matrix:")
+print(correlation_matrix)
