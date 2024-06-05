@@ -1,0 +1,12 @@
+#MODIFIED Z SCORE
+column_name = 'Price'
+
+# Compute Median Absolute Deviation (MAD)
+median = df['Price'].median()
+mad = np.median(np.abs(df['Price'] - median))
+
+# Compute modified Z-score
+df['modified_z_score'] = 0.6745 * (df['Price'] - median) / mad
+
+# Print the modified Z-scores
+print(df[['Price', 'modified_z_score']])
