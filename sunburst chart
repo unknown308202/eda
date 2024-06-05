@@ -1,0 +1,4 @@
+import plotly.express as px
+# Create Sunburst chart
+fig = px.sunburst(df, path=['Transmission', 'Location'], values='Price')
+fig.show()
