@@ -1,0 +1,6 @@
+column_name = 'Transmission'
+sns.histplot(df['Transmission'], kde=True, color='skyblue')
+plt.title('Distribution Plot')
+plt.xlabel('Values')
+plt.ylabel('Frequency')
+plt.show()
