@@ -1,0 +1,47 @@
+#MISSING VALUES
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+numeric_columns = df.select_dtypes(include=['number']).columns
+df[numeric_columns] = df[numeric_columns].fillna(df[numeric_columns].mean())
+
+# Display the first few rows of the dataset to understand its structure
+print(df.head())
+
+
+# Technique 1: Check for missing values in the entire dataset
+print("Technique 1: Check for missing values in the entire dataset")
+print(df.isnull().sum())
+
+# Technique 2: Check for missing values in specific columns
+print("\nTechnique 2: Check for missing values in specific columns")
+print(df[['New_Price', 'Price']].isnull().sum())
+
+# Technique 3: Check for missing values using info() method
+print("\nTechnique 3: Check for missing values using info() method")
+print(df.info())
+
+# Technique 4: Visualize missing values using heatmap
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.isnull(), cmap='viridis', cbar=False)
+plt.title('Missing Values Heatmap')
+plt.show()
+
+# Technique 7: Handle missing values by dropping them
+df.dropna(inplace=True)
+
+# Technique 8: Handle missing values by filling them (e.g., fill with mean, median, mode)
+
+df.dropna(subset=['New_Price'], inplace=True)
+df['New_Price'] = pd.to_numeric(df['New_Price'], errors='coerce')
+mean_new_price = df['New_Price'].mean()
+df['New_Price'] = df['New_Price'].fillna(mean_new_price)
+
+# Display the first few rows of the dataset to verify changes
+print(df.head(10))
+
