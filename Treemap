@@ -1,0 +1,15 @@
+import plotly.express as px
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import geopandas as gpd
+
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+category_column = 'Location'
+# Create a treemap
+fig = px.treemap(df, path=['Location'])
+fig.update_traces(root_color="lightgrey")
+fig.update_layout(margin=dict(t=50, l=25, r=25, b=25))
+fig.show()
