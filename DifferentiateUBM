@@ -1,0 +1,25 @@
+#DIFFERENTIATE BETWEEN U,B,M VARIABLES ANALYSIS
+
+# Univariate analysis
+print("Univariate Analysis:")
+print("Summary Statistics:")
+print(df.describe())
+print("\nPairplot for Each Variable:")
+sns.pairplot(df)
+plt.show()
+
+# Bivariate analysis
+print("\nBivariate Analysis:")
+print("Scatter Plot Matrix:")
+sns.pairplot(df, hue='Price')
+plt.show()
+
+# Multivariate analysis
+print("\nMultivariate Analysis:")
+print("Correlation Heatmap:")
+numerical_columns = df.select_dtypes(include=['number'])
+correlation_matrix = numerical_columns.corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5)
+plt.title('Correlation Heatmap')
+plt.show()
