@@ -1,0 +1,49 @@
+#clustering k-means
+import pandas as pd
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset from CSV file
+df = pd.read_csv("C:\\Users\\bhumi\\OneDrive\\Desktop\\DAPP\\used_cars_data.csv")
+
+# Display the first few rows of the dataset to understand its structure
+print(df.head())
+
+# Print the column names to verify
+print(df.columns)
+
+# Replace 'actual_feature1' and 'actual_feature2' with the actual column names from your dataset
+feature1 = 'Year'  # Replace with actual column name
+feature2 = 'Seats'  # Replace with actual column name
+
+# Select the features for clustering
+features = df[['Year', 'Seats']]
+
+# Handle missing values (if any)
+# Here we fill missing values with the mean of the column
+features = features.fillna(features.mean())
+
+# Standardize the features
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(features)
+
+# Apply K-means clustering
+kmeans = KMeans(n_clusters=3, random_state=42)  # Change n_clusters as needed
+kmeans.fit(scaled_features)
+
+# Add the cluster labels to the original dataframe
+df['Cluster'] = kmeans.labels_
+
+# Visualize the clusters
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x=feature1, y=feature2, hue='Cluster', palette='viridis')
+plt.title('K-means Clustering')
+plt.xlabel(feature1)
+plt.ylabel(feature2)
+plt.show()
+
+# Optionally, save the clustered dataframe to a new CSV file
+df.to_csv('clustered_dataset.csv', index=False)
