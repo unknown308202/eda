@@ -1,0 +1,64 @@
+#bivariate 2numerical SCATTERPLOT
+x_column = 'Price'  # Replace with your actual column name
+y_column = 'Kilometers_Driven'  
+plt.figure(figsize=(10, 6))
+plt.scatter(df['Price'], df['Kilometers_Driven'])
+plt.title(f'Scatter Plot of {'Price'} vs {'Kilometers_Driven'}')
+plt.xlabel('Price')
+plt.ylabel('Kilometers_Driven')
+plt.show()
+
+#bivariate 2N correlation coefficients
+correlation_coefficient = df['Price'].corr(df['Kilometers_Driven'])
+print(f'Correlation coefficient between X and Y: {correlation_coefficient}')
+
+#bivariate 1N 1C boxplot
+numerical_column = 'Year'  
+categorical_column = 'Location'  
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Location' , y='Year' , data=df)
+plt.title(f'Boxplot of {'Year'} by {'Location' }')
+plt.xlabel('Location')
+plt.ylabel('Year' )
+plt.show()
+
+#bivariate 1N 1C barcharts
+numerical_column = 'Price'  
+categorical_column = 'Location' 
+plt.figure(figsize=(10, 6))
+sns.barplot(x= 'Location' , y='Price' , data=df)
+plt.title(f'Bar Chart of {'Price' } by { 'Location' }')
+plt.xlabel( 'Location' )
+plt.ylabel( 'Price' )
+plt.show()
+
+##bivariate 1N 1C violin plots
+numerical_column = 'Price'  
+categorical_column = 'Location' 
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='Location' , y='Price' , data=df)
+plt.title(f'Violin Plot of {'Price' } by {'Location' }')
+plt.xlabel('Location' )
+plt.ylabel('Price' )
+plt.show()
+
+#bivariate 2 categorical V HEATMAP
+# Create a cross-tabulation of the two categorical variables
+cross_tab = pd.crosstab(df['Fuel_Type'], df['Transmission'])
+# Create a heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(cross_tab, annot=True, cmap='Blues', fmt='d')
+plt.title('Heatmap of Two Categorical Variables')
+plt.xlabel('Fuel_Type')
+plt.ylabel('Transmission')
+plt.show()
+
+#BIVARIATE 2CV CLUSTERED BAR CHART
+# Create a cross-tabulation of the two categorical variables
+cross_tab = pd.crosstab(df['Fuel_Type'], df['Transmission'])
+cross_tab.plot(kind='bar', stacked=False, figsize=(8, 6))
+plt.title('Clustered Bar Chart of Two Categorical Variables')
+plt.xlabel('Fuel_Type')
+plt.ylabel('Transmission')
+plt.xticks(rotation=0)
+plt.show()
